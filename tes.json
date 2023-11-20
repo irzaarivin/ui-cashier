@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "tes",
+      "password": "tes",
+      "token": "fake-token-1"
+    },
+    {
+      "id": 2,
+      "username": "es",
+      "password": "es",
+      "token": "fake-token-2"
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    }
+  ]
+}
