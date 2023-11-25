@@ -1,12 +1,9 @@
 'use client'
 
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
-import globalContext from '../context/global-context';
+import React, { useState } from 'react';
 
 const Login = () => {
-  const a =  useContext(globalContext)
-  console.log(a)
   const [input, setInput] = useState({
     username: '',
     password: ''
@@ -27,10 +24,10 @@ const Login = () => {
 
     const response = await axios.post(process.env.NEXT_PUBLIC_URL, {
       maxBodyLength: Infinity,
-      data: data,
-      headers: {
-        'Cookie': "XSRF-TOKEN=eyJpdiI6IjZzUXF6c1Y0OFVVejdRRlMwUG5WdUE9PSIsInZhbHVlIjoieGJyV2ZzV29qa1pmN0xocE4xeDRsVHM1ZWh5N2QyU2w0N3ZZOHNhT2FDWGFHcFhtVVN3SmpFNkN0MjFKQmIyVVo5L2JnTEErVW1oUHU0V1BiWWQxSnFvblByazJoR3FmZitSRVk4SktzUytWdTk0ZmNXUUs2WXN5UXVYTGszUVYiLCJtYWMiOiJjMzc1ZmYxMDA1ZWJlM2Q5M2MzNDNjNTUyN2ZkYWM1ZmI0YTZiZjI0NTQ5N2NjYjU0ZTg3YzViNDUxNWMzMzdiIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InU4YVplSFB6NFRReUM0SmZZayt1N0E9PSIsInZhbHVlIjoiQXFFU1V2UlUwVjNEVzJ1bHlxR2FicWUyekVwY0FOeGt1RUVXZzlNNjk2bFc4K2s3eHlicEllbG1OWDhmWVpwNTVjTys3UmRUakV5V2wxcmJPZWRGa1p5SFY1aE9ubXNtUjhlRDdGMHBiNlZDaDlINDZQUWIyRVMwZU5VS3Y3K1YiLCJtYWMiOiJmZTZjZjY0NGRiNDg4ZjUyNDk2ZWY5OWFjYTcyMjQ4ZjYxZTRmYTI1ZGNjMTM0YTU4NWM2OGQ3NzdiMTI3Y2ZkIiwidGFnIjoiIn0%3D"
-      }
+      data: data
+      // headers: {
+      //   'Cookie': "XSRF-TOKEN=eyJpdiI6IjZzUXF6c1Y0OFVVejdRRlMwUG5WdUE9PSIsInZhbHVlIjoieGJyV2ZzV29qa1pmN0xocE4xeDRsVHM1ZWh5N2QyU2w0N3ZZOHNhT2FDWGFHcFhtVVN3SmpFNkN0MjFKQmIyVVo5L2JnTEErVW1oUHU0V1BiWWQxSnFvblByazJoR3FmZitSRVk4SktzUytWdTk0ZmNXUUs2WXN5UXVYTGszUVYiLCJtYWMiOiJjMzc1ZmYxMDA1ZWJlM2Q5M2MzNDNjNTUyN2ZkYWM1ZmI0YTZiZjI0NTQ5N2NjYjU0ZTg3YzViNDUxNWMzMzdiIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InU4YVplSFB6NFRReUM0SmZZayt1N0E9PSIsInZhbHVlIjoiQXFFU1V2UlUwVjNEVzJ1bHlxR2FicWUyekVwY0FOeGt1RUVXZzlNNjk2bFc4K2s3eHlicEllbG1OWDhmWVpwNTVjTys3UmRUakV5V2wxcmJPZWRGa1p5SFY1aE9ubXNtUjhlRDdGMHBiNlZDaDlINDZQUWIyRVMwZU5VS3Y3K1YiLCJtYWMiOiJmZTZjZjY0NGRiNDg4ZjUyNDk2ZWY5OWFjYTcyMjQ4ZjYxZTRmYTI1ZGNjMTM0YTU4NWM2OGQ3NzdiMTI3Y2ZkIiwidGFnIjoiIn0%3D"
+      // }
     })
 
     console.log("RESPONSE :", response)
@@ -45,7 +42,7 @@ const Login = () => {
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
           <div className="max-w-md mx-auto">
             <div>
-              <h1 className="text-2xl font-semibold">Login Form with Floating Labels</h1>
+              <h1 className="text-2xl font-semibold">Kasir.65</h1>
             </div>
             <div className="divide-y divide-gray-200">
               <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
@@ -58,7 +55,7 @@ const Login = () => {
                   <label htmlFor="password" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
                 </div>
                 <div className="relative">
-                  <button className="bg-blue-500 text-white rounded-md px-2 py-1" onClick={() => handleSubmit()}>Submit</button>
+                  <button className="bg-blue-500 text-white rounded-md px-2 py-1 mt-5" onClick={() => handleSubmit()}>Submit</button>
                 </div>
               </div>
             </div>
