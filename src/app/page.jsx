@@ -2,6 +2,9 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Calculator from './components/calculator'
+import Auth from './auth/page'
+import BarcodeScanner from './components/BarcodeScanner'
+import Kasir from './components/kasir'
 
 export default function Home() {
 
@@ -15,8 +18,9 @@ export default function Home() {
   }, [])
 
   return (
-    <main className='mt-28'> 
-      <Calculator />
+    <main className=''> 
+    <Kasir />
     </main>
+   
   )
 }
