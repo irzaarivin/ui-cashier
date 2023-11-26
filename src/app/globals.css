@@ -26,5 +26,5 @@
     rgb(var(--background-start-rgb));
 } */
 body{
-  background-color: bisque;
+  background-color: rgb(234, 197, 152);
 }

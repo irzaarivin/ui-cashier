@@ -2,10 +2,11 @@
 
 import React from 'react';
 import globalContext from './global-context';
+const tes = "text"
 
 function Context({children}) {
 return (
-  <globalContext.Provider props={{token : 'dsasa'}} >
+  <globalContext.Provider value={tes}  >
     {children}
   </globalContext.Provider>
 )

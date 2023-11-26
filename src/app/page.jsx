@@ -24,8 +24,7 @@ export default function Home() {
 
   return (
     <main className=''> 
-    
-    <Kasir />
+    <Auth />
     
     </main>
    
