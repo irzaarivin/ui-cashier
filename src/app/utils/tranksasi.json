@@ -1,0 +1,48 @@
+{
+    "transaksi": [
+      {
+        "id_transaksi": 201,
+        "id_pengguna": 1,
+        "tanggal": "2023-11-26",
+        "barang": [
+          {
+            "id_barang": 1,
+            "jumlah": 2
+          },
+          {
+            "id_barang": 2,
+            "jumlah": 1
+          }
+        ],
+        "total_harga": 17000
+      },
+      {
+        "id_transaksi": 202,
+        "id_pengguna": 2,
+        "tanggal": "2023-11-26",
+        "barang": [
+          {
+            "id_barang": 103,
+            "jumlah": 3
+          }
+        ],
+        "total_harga": 150000
+      },
+      {
+        "id_transaksi": 203,
+        "id_pengguna": 3,
+        "tanggal": "2023-11-26",
+        "barang": [
+          {
+            "id_barang": 4,
+            "jumlah": 5
+          },
+          {
+            "id_barang": 5,
+            "jumlah": 2
+          }
+        ],
+        "total_harga": 25000
+      }
+    ]
+  }
