@@ -1,7 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
+
 import { ToastContainer, toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
+
 import jsPDF from 'jspdf';
+
 import 'jspdf-autotable';
 
 
@@ -19,47 +23,47 @@ const formatCurrency = (amount) => {
   return trimmedAmount;
 };
 
-const generatePDF = (cartItems, total) => {
-  const doc = new jsPDF();
-  doc.text('Invoice', 10, 10);
-  doc.autoTable({
-    head: [['Nama Barang', 'Jumlah', 'Harga', 'Total']],
-    body: cartItems.map(item => [item.nama_barang, item.quantity, formatCurrency(item.harga_barang), formatCurrency(item.harga_barang * item.quantity)])
-  });
-  doc.text(`Total: ${formatCurrency(total)}`, 10, doc.autoTable.previous.finalY + 10);
-  doc.save('invoice.pdf');
-};
-
-const Cart = ({ cartItems, onCancel, onToggle }) => {
-  const [cartVisible, setCartVisible] = useState(true);
-  const cartRef = useRef(null);
-
-  const total = cartItems.reduce((acc, item) => acc + item.harga_barang * item.quantity, 0);
-
-  const handleBuy = () => {
-    console.log('Cart Items:', cartItems); // Log the cart items for debugging
-    generatePDF(cartItems, total);
-    toast.success('Terima kasih telah berbelanja!');
+  const generatePDF = (cartItems, total) => {
+    const doc = new jsPDF();
+    doc.text('Invoice', 10, 10);
+    doc.autoTable({
+      head: [['Nama Barang', 'Jumlah', 'Harga', 'Total']],
+      body: cartItems.map(item => [item.nama_barang, item.quantity, formatCurrency(item.harga_barang), formatCurrency(item.harga_barang * item.quantity)])
+    });
+    doc.text(`Total: ${formatCurrency(total)}`, 10, doc.autoTable.previous.finalY + 10);
+    doc.save('invoice.pdf');
   };
 
-  const toggleCart = () => {
-    setCartVisible(!cartVisible);
-    onToggle();
-  };
+  const Cart = ({ cartItems, onCancel, onToggle }) => {
+    const [cartVisible, setCartVisible] = useState(true);
+    const cartRef = useRef(null);
 
-  const handleClickOutside = (event) => {
-    if (cartRef.current && !cartRef.current.contains(event.target)) {
-      setCartVisible(false);
-      onToggle();
-    }
-  };
+    const total = cartItems.reduce((acc, item) => acc + item.harga_barang * item.quantity, 0);
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+    const handleBuy = () => {
+      console.log('Cart Items:', cartItems); 
+      generatePDF(cartItems, total);
+      toast.success('Terima kasih telah berbelanja!');
     };
-  }, []);
+
+    const toggleCart = () => {
+      setCartVisible(!cartVisible);
+      onToggle();
+    };
+
+    const handleClickOutside = (event) => {
+      if (cartRef.current && !cartRef.current.contains(event.target)) {
+        setCartVisible(false);
+        onToggle();
+      }
+    };
+
+    useEffect(() => {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, []);
 
   return (
     <div ref={cartRef} className={`fixed inset-y-0 right-0 bg-black text-white p-4 w-1/3 ${cartVisible ? '' : 'hidden'}`}>

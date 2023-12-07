@@ -163,6 +163,51 @@ article {
   stroke: var(--accent);
   stroke-dasharray: 0, 1;
 } */
-body{
-  background-color: red;
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
 }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif; 
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.primary-button {
+  background-color: #4caf50; 
+  color: #fff;
+}
+
+.secondary-button {
+  background-color: #3498db; 
+  color: #fff;
+}
+

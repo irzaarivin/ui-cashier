@@ -11,7 +11,7 @@
             "id_barang": 2,
             "nama_barang": "Buku Tulis",
             "harga_barang": 5000,
-            "gambar_barang": "image/buku.jpg",
+            "gambar_barang": "./utils/image/buku.jpg",
             "stok": 25
         },
         {
@@ -32,7 +32,7 @@
             "id_barang": 5,
             "nama_barang": "Buku Tulis",
             "harga_barang": 5000,
-            "gambar_barang": "image/buku.jpg",
+            "gambar_barang": "./image/buku.jpg",
             "stok": 25
         },
         {
@@ -53,7 +53,7 @@
             "id_barang": 8,
             "nama_barang": "Buku Tulis",
             "harga_barang": 5000,
-            "gambar_barang": "image/buku.jpg",
+            "gambar_barang": "image/1.jpeg",
             "stok": 25
         },
         {
@@ -62,7 +62,63 @@
             "harga_barang": 250000,
             "gambar_barang": "data:image/jpeg;base64,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",
             "stok": 300
+        },
+        {
+            "id_barang": 10,
+            "nama_barang": "seragam",
+            "harga_barang": 250000,
+            "gambar_barang": "data:image/jpeg;base64,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",
+            "stok": 300
         }
         
-    ]
+    ],
+    "makanan": [
+        {
+          "id_barang": 11,
+          "nama_barang": "kebab",
+          "harga_barang": 5000,
+          "gambar_barang": "/image/buku.jpg",
+          "stock": 20
+        },
+        {
+          "id_barang": 12,
+          "nama_barang": "Nasi Goreng",
+          "harga_barang": 7000,
+          "gambar_barang": "#",
+          "stock": 20
+        },
+        {
+          "id_barang": 13,
+          "nama_barang": "burger",
+          "harga": 5000,
+          "gambar": "",
+          "stock": 20
+        }
+      ],
+      "minuman": [
+        {
+          "id_barang": 14,
+          "nama_barang": "green tea",
+          "harga_barang": 6000,
+          "gambar_barang": "path/to/espresso.jpg",
+          "stock": 20
+        },
+        {
+          "id_barang": 15,
+          "nama_barang": "teh pucuk harum",
+          "harga_barang": 4500,
+          "gambar_barang": "path/to/smoothie_berry.jpg",
+          "stock": 20
+        },
+        {
+          "id_barang": 16,
+          "nama_barang": "air es",
+          "harga_barang": 2000,
+          "gambar_barang": "path/to/lemonade.jpg",
+          "stock": 20
+
+        }
+      ]
+    
+
 }

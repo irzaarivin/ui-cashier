@@ -1,5 +1,6 @@
 'use client'
 
+'use client'
 import React from 'react';
 import globalContext from './global-context';
 const tes = "text"
