@@ -1,23 +1,105 @@
+import { useEffect } from 'react';
 import bg_dark from './assets/bg_dark.jpg';
+import { useState } from 'react';
 
 function App() {
+  const [products, setProducts] = useState([])
+  const [cart, setCart] = useState([])
+  const [total, setTotal] = useState()
+
+  const fetchData = async () => {
+    const res = await fetch('http://localhost:3000/products')
+    const data = await res.json();
+    setProducts(data);
+  }
+
+  useEffect(() => {
+    let newTotal = 0;
+    cart.forEach((item) => {
+      newTotal += item.price * item.quantity;
+    });
+    setTotal(newTotal);
+  }, [cart]);
+
+  const addProduct = (data) => {
+    const existingItem = cart.find((item) => item.id === data.id);
+
+    if (existingItem) {
+      const updatedCart = cart.map((item) =>
+        item.id === data.id ? { ...item, quantity: item.quantity + 1 } : item
+      );
+      setCart(updatedCart);
+    } else {
+      setCart([...cart, { ...data, quantity: 1 }]);
+    }
+  }
+
+  const subtractItemFromCart = (itemId) => {
+    const existingItem = cart.find((item) => item.id === itemId);
+
+    if (existingItem) {
+      const updatedCart = cart.map((item) =>
+        item.id === itemId
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      );
+
+      const filteredCart = updatedCart.filter((item) => item.quantity > 0);
+      setCart(filteredCart);
+    }
+  };
+
+  const completePayment = () => {
+    setTotal(0)
+    setCart([])
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
 
   return (
-    <div className="w-full grid grid-cols-5 gap-10 h-screen text-white p-10" style={{ backgroundImage: `url(${bg_dark})`, backgroundRepeat: 'no-repeat', backgroundAttachment: 'fixed', backgroundSize: 'cover' }}>
-      <div className="col-span-4">
-        <div className='bg-[#262626] drop-shadow-2xl h-20 py-5 px-24 w-full relative rounded-2xl'>
-          <div className='bg-[#8C004D] w-16 absolute drop-shadow-xl top-2 rounded-md left-2'>
-            <p className='px-2 py-3 text-3xl font-semibold'>Rp.</p>
+    <div className='grid grid-cols-10 h-screen bg-cover text-white' style={{ backgroundImage: `url(${bg_dark})` }}>
+      <div className=' w-full col-span-7 p-8 overflow-hidden '>
+        <div className='p-3 bg-[#262626] rounded-xl relative flex justify-between mb-5'>
+          <div className='flex font-semibold'>
+            <div className='bg-[#8C004D] p-3 rounded-xl text-3xl'>Rp.</div>
+            <p className='text-3xl p-3 font-normal'>{total}</p>
           </div>
-          <span className='text-4xl'>35.000.000.000</span>
-          <button className='bg-[#177BE5] px-16 w-auto absolute drop-shadow-xl top-2 rounded-md right-2'>
-            <p className='px-2 py-3 text-3xl font-semibold'>Complete Payment</p>
+          <button onClick={() => completePayment()} className='py-3 bg-[#177BE5] px-5 rounded-xl text-3xl font-semibold'>
+            Complete Payment
           </button>
         </div>
+        <div className='flex flex-wrap gap-5 justify-center h-full overflow-auto pb-20'>
+          {products.map(product => (
+            <div onClick={() => addProduct(product)} className="card card-compact w-52 bg-base-100 shadow-xl cursor-pointer" key={product.id}>
+              <figure><img src={product.image} alt="Shoes" /></figure>
+              <div className="card-body">
+                <h2 className="card-title">{product.name}</h2>
+                <p>{product.description}</p>
+                <div className="card-actions justify-start">
+                  <p className='text-lime-400'>Rp.{product.price}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className='absolute right-4 w-[22rem]'>
-        <div className='bg-[#363636] text-xl font-semibold px-3 h-14 rounded-t-xl pt-1'>Keranjang</div>
-        <div className='bg-[#262626] h-72 rounded-b-xl'></div>
+      <div className='p-5 col-span-3'>
+        <div className='bg-[#262626] w-full rounded-xl'>
+          <div className='p-4 bg-[#363636] text-xl rounded-t-xl'>Keranjang</div>
+          <div className='h-96 overflow-auto px-2 py-2'>
+            {cart.map((data, idx) => (
+              <div className='flex justify-between py-1' key={idx}>
+                <p>{data.name}</p>
+                <div className='flex gap-3'>
+                  <p>x{data.quantity}</p>
+                  <button onClick={() => subtractItemFromCart(data.id)} className='bg-red-400 rounded-full w-5'>-</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
