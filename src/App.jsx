@@ -61,42 +61,42 @@ function App() {
 
   const completePayment = async () => {
     try {
-    let data = []
-
-    cart.map((item) => {
-      const { id, quantity } = item
-      data.push({ itemId: id, quantity })
-    })
-
-     const res = await fetch(`${base_url}/transaction`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        totalPrice: total,
-        data
+      let data = []
+  
+      cart.map((item) => {
+        const { id, quantity } = item
+        data.push({ itemId: id, quantity })
       })
-     })
-     const { status } = res.json();
-
-     if(status === 'success') {
-       data = []
-       Swal.fire({
-         title: "Payment Success",
-         text: `Your total payment is Rp. ${total}`,
-         icon: "success"
-       });
-       setCart([])
-       setTotal(0)
-       fetchData();
-     } else {
-       Swal.fire({
-         title: "Payment Failed",
-         text: `Something went wrong`,
-         icon: "error"
-       });
-     }
+  
+      const res = await fetch(`${base_url}/transaction/bulk`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          totalPrice: total,
+          data
+        })
+      })
+      const { status } = await res.json();
+  
+      if(status === 'Success') {
+        data = []
+        Swal.fire({
+          title: "Payment Success",
+          text: `Your total payment is Rp. ${total}`,
+          icon: "success"
+        });
+        setCart([])
+        setTotal(0)
+        fetchData();
+      } else {
+        Swal.fire({
+          title: "Payment Failed",
+          text: `Something went wrong`,
+          icon: "error"
+        });
+      }
     } catch (error) {
       Swal.fire({
         title: "Payment Failed",
@@ -105,6 +105,7 @@ function App() {
       });
     }
   }
+  
 
   useEffect(() => {
     fetchData();
