@@ -9,7 +9,7 @@ function App() {
 
   const fetchData = async () => {
     const res = await fetch('http://localhost:4444/item')
-    const data = await res.json();
+    const { data } = await res.json();
     setProducts(data);
   }
 
@@ -72,11 +72,11 @@ function App() {
         </div>
         <div className='flex flex-wrap gap-5 justify-center h-full overflow-auto pb-20'>
           {products.map(product => (
-            <div onClick={() => addProduct(product)} className="card card-compact w-52 bg-base-100 shadow-xl cursor-pointer" key={product.id}>
+            <div onClick={() => addProduct(product)} className="card card-compact w-72 bg-base-100 shadow-xl cursor-pointer" key={product.id}>
               <figure><img src={product.image} alt="Shoes" /></figure>
               <div className="card-body">
-                <h2 className="card-title">{product.name}</h2>
-                <p>{product.description}</p>
+                <h2 className="card-title select-none">{product.name}</h2>
+                <p className='select-none'>{product.description}</p>
                 <div className="card-actions justify-start">
                   <p className='text-lime-400'>Rp.{product.price}</p>
                 </div>
