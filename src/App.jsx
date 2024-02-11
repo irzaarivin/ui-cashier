@@ -13,8 +13,6 @@ function App() {
     setProducts(data);
   }
 
-  console.log(products);
-
   useEffect(() => {
     let newTotal = 0;
     cart.forEach((item) => {
