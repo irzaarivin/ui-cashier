@@ -47,7 +47,7 @@ export default function Calculator() {
       <div className='h-96 flex flex-wrap gap-2 overflow-auto px-2 py-2'>
         {btnValues.flat().map((btn, i) => {
           return (
-            <button className={`w-20 ${btn === "C" ? "bg-red-600 font-semibold" : btn === "=" ? "bg-yellow-600 font-semibold" : ""} text-2xl border border-white rounded-lg`} onClick={() => clickOperator(btn)} key={i}>
+            <button className={`w-20 ${btn === "C" ? "bg-red-600 font-semibold" : btn === "=" ? "bg-yellow-600 font-semibold" : ""} text-lg border border-white rounded-lg`} onClick={() => clickOperator(btn)} key={i}>
               {btn}
             </button>
           );

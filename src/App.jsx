@@ -141,7 +141,7 @@ function App() {
           ))}
         </div>
       </div>
-      <div className='p-5 col-span-3 flex flex-col gap-y-10'>
+      <div className='p-5 col-span-3 flex flex-col gap-y-10 md:px-24'>
         <div className='bg-[#262626] w-full rounded-xl'>
           <div className='p-4 bg-[#363636] text-xl rounded-t-xl'>Keranjang</div>
           <div className='h-72 overflow-auto px-2 py-2'>
@@ -156,7 +156,7 @@ function App() {
             ))}
           </div>
         </div>
-        <div className='bg-[#262626] w-9/12 rounded-xl'>
+        <div className='bg-[#262626] w-full rounded-xl'>
           <Calculator />
         </div>
       </div>
