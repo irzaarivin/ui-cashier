@@ -2,7 +2,10 @@ import { useEffect } from 'react';
 import bg_dark from './assets/bg_dark.jpg';
 import { useState } from 'react';
 import Swal from 'sweetalert2'
+import Calculator from './components/Calculator';
 const base_url = 'http://localhost:4444'
+
+
 
 function App() {
   const [products, setProducts] = useState([])
@@ -62,12 +65,12 @@ function App() {
   const completePayment = async () => {
     try {
       let data = []
-  
+
       cart.map((item) => {
         const { id, quantity } = item
         data.push({ itemId: id, quantity })
       })
-  
+
       const res = await fetch(`${base_url}/transaction/bulk`, {
         method: 'POST',
         headers: {
@@ -79,8 +82,8 @@ function App() {
         })
       })
       const { status } = await res.json();
-  
-      if(status === 'Success') {
+
+      if (status === 'Success') {
         data = []
         Swal.fire({
           title: "Payment Success",
@@ -105,7 +108,7 @@ function App() {
       });
     }
   }
-  
+
 
   useEffect(() => {
     fetchData();
@@ -138,10 +141,10 @@ function App() {
           ))}
         </div>
       </div>
-      <div className='p-5 col-span-3'>
+      <div className='p-5 col-span-3 flex flex-col gap-y-10'>
         <div className='bg-[#262626] w-full rounded-xl'>
           <div className='p-4 bg-[#363636] text-xl rounded-t-xl'>Keranjang</div>
-          <div className='h-96 overflow-auto px-2 py-2'>
+          <div className='h-72 overflow-auto px-2 py-2'>
             {cart.map((data, idx) => (
               <div className='flex justify-between py-1' key={idx}>
                 <p>{data.name}</p>
@@ -152,6 +155,9 @@ function App() {
               </div>
             ))}
           </div>
+        </div>
+        <div className='bg-[#262626] w-9/12 rounded-xl'>
+          <Calculator />
         </div>
       </div>
     </div>
