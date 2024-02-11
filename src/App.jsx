@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import bg_dark from './assets/bg_dark.jpg';
 import { useState } from 'react';
+import Swal from 'sweetalert2'
+const base_url = 'http://localhost:4444'
 
 function App() {
   const [products, setProducts] = useState([])
@@ -8,7 +10,7 @@ function App() {
   const [total, setTotal] = useState()
 
   const fetchData = async () => {
-    const res = await fetch('http://localhost:4444/item')
+    const res = await fetch(`${base_url}/item`)
     const { data } = await res.json();
     setProducts(data);
   }
@@ -25,10 +27,18 @@ function App() {
     const existingItem = cart.find((item) => item.id === data.id);
 
     if (existingItem) {
-      const updatedCart = cart.map((item) =>
-        item.id === data.id ? { ...item, quantity: item.quantity + 1 } : item
-      );
-      setCart(updatedCart);
+      if (existingItem.quantity >= data.stock) {
+        Swal.fire({
+          title: "Cannot add more product",
+          text: `The quantity of this product has reached its limit`,
+          icon: "warning"
+        });
+      } else {
+        const updatedCart = cart.map((item) =>
+          item.id === data.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+        setCart(updatedCart);
+      }
     } else {
       setCart([...cart, { ...data, quantity: 1 }]);
     }
@@ -49,10 +59,53 @@ function App() {
     }
   };
 
-  const completePayment = () => {
-    setTotal(0)
-    setCart([])
+  const completePayment = async () => {
+    try {
+      let data = []
+  
+      cart.map((item) => {
+        const { id, quantity } = item
+        data.push({ itemId: id, quantity })
+      })
+  
+      const res = await fetch(`${base_url}/transaction/bulk`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          totalPrice: total,
+          data
+        })
+      })
+      const { status } = await res.json();
+  
+      if(status === 'Success') {
+        data = []
+        Swal.fire({
+          title: "Payment Success",
+          text: `Your total payment is Rp. ${total}`,
+          icon: "success"
+        });
+        setCart([])
+        setTotal(0)
+        fetchData();
+      } else {
+        Swal.fire({
+          title: "Payment Failed",
+          text: `Something went wrong`,
+          icon: "error"
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Payment Failed",
+        text: `Something went wrong`,
+        icon: "error"
+      });
+    }
   }
+  
 
   useEffect(() => {
     fetchData();
