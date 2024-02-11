@@ -8,7 +8,7 @@ function App() {
   const [total, setTotal] = useState()
 
   const fetchData = async () => {
-    const res = await fetch('http://localhost:3000/products')
+    const res = await fetch('http://localhost:4444/item')
     const data = await res.json();
     setProducts(data);
   }
