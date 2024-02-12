@@ -157,7 +157,7 @@ function App() {
                 <p className='select-none'>{product.description}</p>
                 <div className="card-actions flex justify-between">
                   <div className='text-lime-400'>Rp.{product.price}</div>
-                  <div>x{product.stock}</div>
+                  <div>x {product.stock}</div>
                 </div>
               </div>
             </div>
