@@ -40,16 +40,16 @@ export default function Calculator() {
 
   return (
     <>
-      <div className='p-4 bg-[#363636] text-3xl rounded-t-xl h-24 flex justify-end font-semibold'>
+      <div className='p-4 bg-[#363636] text-3xl rounded-t-xl h-24 w-full flex justify-end font-semibold'>
         {calDisplay.map((item, idx) => (
           <p className={`${typeof item === "number" ? "mx-0" : "mx-1"}`} key={idx}>{item}</p>
         ))}
       </div>
-      <div className='flex justify-center py-1'>
+      <div className='flex justify-center py-1 w-full'>
         <div className='h-96 grid grid-cols-4 gap-2 overflow-auto px-3 py-2'>
           {btnValues.flat().map((btn, i) => {
             return (
-              <button className={`col-span-1 w-18 p-1 xl:w-20 ${btn === "C" ? "bg-red-600 font-semibold" : btn === "=" ? "bg-yellow-600 font-semibold" : ""} text-lg border border-white rounded-lg active:bg-white active:text-black`} onClick={() => clickOperator(btn)} key={i}>
+              <button className={`col-span-1 w-10 p-1 2xl:w-[4.5rem] ${btn === "C" ? "bg-red-600 font-semibold" : btn === "=" ? "bg-yellow-600 font-semibold" : ""} text-lg border border-white rounded-lg active:bg-white active:text-black`} onClick={() => clickOperator(btn)} key={i}>
                 {btn}
               </button>
             );
