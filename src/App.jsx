@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import bg_dark from './assets/bg_dark.jpg';
+import bg_cool from './assets/bg_cool.png';
 import { useState } from 'react';
 import Swal from 'sweetalert2'
 import Calculator from './components/Calculator';
@@ -137,7 +137,7 @@ function App() {
   }, [])
 
   return (
-    <div className='grid grid-cols-10 h-screen bg-cover text-white overflow-hidden' style={{ backgroundImage: `url(${bg_dark})` }}>
+    <div className='grid grid-cols-10 h-screen bg-cover text-white overflow-hidden' style={{ backgroundImage: `url(${bg_cool})` }}>
       <div className=' w-full col-span-7 p-8 overflow-hidden '>
         <div className='p-3 bg-[#262626] rounded-xl relative flex justify-between mb-5'>
           <div className='flex font-semibold'>
@@ -148,9 +148,9 @@ function App() {
             complete payment
           </button>
         </div>
-        <div className='flex flex-wrap gap-7 2xl:gap-8 max-h-full overflow-auto pb-20'>
+        <div className='grid grid-cols-4 gap-7 2xl:gap-8 max-h-full overflow-auto pb-20'>
           {products.map(product => (
-            <div onClick={() => addProduct(product)} className="card card-compact w-64 2xl:h-96 h-96 2xl:w-80 bg-base-100 shadow-xl cursor-pointer" key={product.id}>
+            <div onClick={() => addProduct(product)} className="card col-span-1 card-compact w-64 2xl:h-96 h-96 2xl:w-full bg-base-100 shadow-xl cursor-pointer" key={product.id}>
               <figure><img src={product.image} alt="Shoes" /></figure>
               <div className="card-body">
                 <h2 className="card-title select-none">{product.name}</h2>
@@ -173,7 +173,7 @@ function App() {
                 <p>{data.name}</p>
                 <div className='flex gap-3'>
                   <p>x{data.quantity}</p>
-                  <button onClick={() => subtractItemFromCart(data.id)} className='bg-red-400 rounded-full w-5 h-5'>-</button>
+                  <button onClick={() => subtractItemFromCart(data.id)} className='bg-red-400 rounded-full w-5 h-5 leading-5'>-</button>
                 </div>
               </div>
             ))}

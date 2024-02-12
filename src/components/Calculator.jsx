@@ -46,10 +46,10 @@ export default function Calculator() {
         ))}
       </div>
       <div className='flex justify-center py-1'>
-        <div className='h-96 grid grid-cols-4 gap-2 overflow-auto px-2 py-2'>
+        <div className='h-96 grid grid-cols-4 gap-2 overflow-auto px-3 py-2'>
           {btnValues.flat().map((btn, i) => {
             return (
-              <button className={`col-span-1 w-18 p-1 xl:min-w-20 ${btn === "C" ? "bg-red-600 font-semibold" : btn === "=" ? "bg-yellow-600 font-semibold" : ""} text-lg border border-white rounded-lg active:bg-white active:text-black`} onClick={() => clickOperator(btn)} key={i}>
+              <button className={`col-span-1 w-18 p-1 xl:w-20 ${btn === "C" ? "bg-red-600 font-semibold" : btn === "=" ? "bg-yellow-600 font-semibold" : ""} text-lg border border-white rounded-lg active:bg-white active:text-black`} onClick={() => clickOperator(btn)} key={i}>
                 {btn}
               </button>
             );
