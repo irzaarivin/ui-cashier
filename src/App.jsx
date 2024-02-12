@@ -3,7 +3,8 @@ import bg_dark from './assets/bg_dark.jpg';
 import { useState } from 'react';
 import Swal from 'sweetalert2'
 import Calculator from './components/Calculator';
-const base_url = 'http://localhost:4444'
+const base_url = 'http://192.168.101.103:4444'
+// const base_url = 'http://localhost:4444'
 
 
 
@@ -11,9 +12,10 @@ function App() {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
   const [total, setTotal] = useState()
+  const [totalPayment, setTotalPayment] = useState();
 
   const fetchData = async () => {
-    const res = await fetch(`${base_url}/item`)
+    const res = await fetch(`${base_url}/item?status=available`)
     const { data } = await res.json();
     setProducts(data);
   }
@@ -23,7 +25,8 @@ function App() {
     cart.forEach((item) => {
       newTotal += item.price * item.quantity;
     });
-    setTotal(newTotal);
+    setTotal(newTotal.toLocaleString('id-ID'));
+    setTotalPayment(newTotal)
   }, [cart]);
 
   const addProduct = (data) => {
@@ -34,7 +37,9 @@ function App() {
         Swal.fire({
           title: "Cannot add more product",
           text: `The quantity of this product has reached its limit`,
-          icon: "warning"
+          icon: "warning",
+          background: "#262626",
+          color: "#fff"
         });
       } else {
         const updatedCart = cart.map((item) =>
@@ -64,47 +69,64 @@ function App() {
 
   const completePayment = async () => {
     try {
-      let data = []
+      if (cart.length > 0) {
 
-      cart.map((item) => {
-        const { id, quantity } = item
-        data.push({ itemId: id, quantity })
-      })
+        let data = []
 
-      const res = await fetch(`${base_url}/transaction/bulk`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          totalPrice: total,
-          data
+        cart.map((item) => {
+          const { id, quantity } = item
+          data.push({ itemId: id, quantity })
         })
-      })
-      const { status } = await res.json();
 
-      if (status === 'Success') {
-        data = []
-        Swal.fire({
-          title: "Payment Success",
-          text: `Your total payment is Rp. ${total}`,
-          icon: "success"
-        });
-        setCart([])
-        setTotal(0)
-        fetchData();
+        const res = await fetch(`${base_url}/transaction/bulk`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            totalPrice: totalPayment,
+            data
+          })
+        })
+        const { status } = await res.json();
+
+        if (status === 'Success') {
+          data = []
+          Swal.fire({
+            title: "Payment Success",
+            text: `Your total payment is Rp. ${total}`,
+            icon: "success",
+            background: "#262626",
+            color: "#fff"
+          });
+          setCart([])
+          setTotal(0)
+          fetchData();
+        } else {
+          Swal.fire({
+            title: "Payment Failed",
+            text: `Something went wrong`,
+            icon: "error",
+            background: "#262626",
+            color: "#fff"
+          });
+        }
       } else {
         Swal.fire({
-          title: "Payment Failed",
-          text: `Something went wrong`,
-          icon: "error"
-        });
+          title: "No Payment",
+          text: `There is no item in your cart`,
+          icon: "error",
+          background: "#262626",
+          color: "#fff"
+        })
       }
     } catch (error) {
       Swal.fire({
         title: "Payment Failed",
         text: `Something went wrong`,
-        icon: "error"
+        icon: "error",
+        background: "#262626",
+        color: "#fff"
       });
     }
   }
@@ -115,33 +137,34 @@ function App() {
   }, [])
 
   return (
-    <div className='grid grid-cols-10 h-screen bg-cover text-white' style={{ backgroundImage: `url(${bg_dark})` }}>
+    <div className='grid grid-cols-10 h-screen bg-cover text-white overflow-hidden' style={{ backgroundImage: `url(${bg_dark})` }}>
       <div className=' w-full col-span-7 p-8 overflow-hidden '>
         <div className='p-3 bg-[#262626] rounded-xl relative flex justify-between mb-5'>
           <div className='flex font-semibold'>
             <div className='bg-[#8C004D] p-3 rounded-xl text-3xl'>Rp.</div>
             <p className='text-3xl p-3 font-normal'>{total}</p>
           </div>
-          <button onClick={() => completePayment()} className='py-3 bg-[#177BE5] px-5 rounded-xl text-3xl font-semibold'>
-            Complete Payment
+          <button onClick={() => completePayment()} className='py-3 bg-[#177BE5] active:bg-blue-900 px-5 rounded-xl text-3xl font-semibold'>
+            complete payment
           </button>
         </div>
-        <div className='flex flex-wrap gap-5 justify-center h-full overflow-auto pb-20'>
+        <div className='flex flex-wrap gap-7 max-h-full overflow-auto pb-20'>
           {products.map(product => (
-            <div onClick={() => addProduct(product)} className="card card-compact w-72 bg-base-100 shadow-xl cursor-pointer" key={product.id}>
+            <div onClick={() => addProduct(product)} className="card card-compact w-64 2xl:h-96 h-96 2xl:w-[18.65rem] bg-base-100 shadow-xl cursor-pointer" key={product.id}>
               <figure><img src={product.image} alt="Shoes" /></figure>
               <div className="card-body">
                 <h2 className="card-title select-none">{product.name}</h2>
                 <p className='select-none'>{product.description}</p>
-                <div className="card-actions justify-start">
-                  <p className='text-lime-400'>Rp.{product.price}</p>
+                <div className="card-actions flex justify-between">
+                  <div className='text-lime-400'>Rp.{product.price}</div>
+                  <div>x{product.stock}</div>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <div className='p-5 col-span-3 flex flex-col gap-y-10 md:px-24'>
+      <div className='px-5 py-8 col-span-3 flex flex-col gap-y-10 2xl:px-24'>
         <div className='bg-[#262626] w-full rounded-xl'>
           <div className='p-4 bg-[#363636] text-xl rounded-t-xl'>Keranjang</div>
           <div className='h-72 overflow-auto px-2 py-2'>
