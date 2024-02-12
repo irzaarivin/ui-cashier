@@ -6,8 +6,6 @@ import Calculator from './components/Calculator';
 const base_url = 'http://192.168.101.103:4444'
 // const base_url = 'http://localhost:4444'
 
-
-
 function App() {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
