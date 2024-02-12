@@ -12,21 +12,21 @@ export default function Calculator() {
   const [calDisplay, setCalDisplay] = useState([]);
 
   const clickOperator = (ops) => {
-    if(ops !== "C" && ops !== "del" && ops !== "=") {
+    if (ops !== "C" && ops !== "del" && ops !== "=") {
       setCalDisplay([...calDisplay, ops])
     }
 
-    if(ops === "C") {
+    if (ops === "C") {
       setCalDisplay([]);
     }
 
-    if(ops === "del") {
+    if (ops === "del") {
       let newVal = [...calDisplay];
       newVal.pop();
       setCalDisplay(newVal);
     }
 
-    if(ops === "=") {
+    if (ops === "=") {
       try {
         const expression = calDisplay.join('').replace(/x/g, '*');
         const result = eval(expression);
@@ -45,14 +45,16 @@ export default function Calculator() {
           <p className={`${typeof item === "number" ? "mx-0" : "mx-1"}`} key={idx}>{item}</p>
         ))}
       </div>
-      <div className='h-96 flex flex-wrap gap-2 overflow-auto px-2 py-2'>
-        {btnValues.flat().map((btn, i) => {
-          return (
-            <button className={`w-18 p-1 xl:w-20 ${btn === "C" ? "bg-red-600 font-semibold" : btn === "=" ? "bg-yellow-600 font-semibold" : ""} text-lg border border-white rounded-lg active:bg-white active:text-black`} onClick={() => clickOperator(btn)} key={i}>
-              {btn}
-            </button>
-          );
-        })}
+      <div className='flex justify-center py-1'>
+        <div className='h-96 grid grid-cols-4 gap-2 overflow-auto px-2 py-2'>
+          {btnValues.flat().map((btn, i) => {
+            return (
+              <button className={`col-span-1 w-18 p-1 xl:min-w-20 ${btn === "C" ? "bg-red-600 font-semibold" : btn === "=" ? "bg-yellow-600 font-semibold" : ""} text-lg border border-white rounded-lg active:bg-white active:text-black`} onClick={() => clickOperator(btn)} key={i}>
+                {btn}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </>
   )

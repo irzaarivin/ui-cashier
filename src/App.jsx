@@ -148,9 +148,9 @@ function App() {
             complete payment
           </button>
         </div>
-        <div className='flex flex-wrap gap-7 max-h-full overflow-auto pb-20'>
+        <div className='flex flex-wrap gap-7 2xl:gap-8 max-h-full overflow-auto pb-20'>
           {products.map(product => (
-            <div onClick={() => addProduct(product)} className="card card-compact w-64 2xl:h-96 h-96 2xl:w-[18.65rem] bg-base-100 shadow-xl cursor-pointer" key={product.id}>
+            <div onClick={() => addProduct(product)} className="card card-compact w-64 2xl:h-96 h-96 2xl:w-80 bg-base-100 shadow-xl cursor-pointer" key={product.id}>
               <figure><img src={product.image} alt="Shoes" /></figure>
               <div className="card-body">
                 <h2 className="card-title select-none">{product.name}</h2>
@@ -173,7 +173,7 @@ function App() {
                 <p>{data.name}</p>
                 <div className='flex gap-3'>
                   <p>x{data.quantity}</p>
-                  <button onClick={() => subtractItemFromCart(data.id)} className='bg-red-400 rounded-full w-5'>-</button>
+                  <button onClick={() => subtractItemFromCart(data.id)} className='bg-red-400 rounded-full w-5 h-5'>-</button>
                 </div>
               </div>
             ))}
