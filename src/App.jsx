@@ -222,10 +222,10 @@ function App() {
           <p className='text-black text-center font-semibold text-xl'>CASHIER APP</p>
           <form onSubmit={loginSubmit}>
             <div className='my-3'>
-              <input onChange={loginValue} type="text" name='username' id='username' className='p-1 bg-white border-b-2 focus:outline-none w-80 text-lg' />
+              <input onChange={loginValue} type="text" name='username' id='username' className='p-1 bg-white border-b-2 focus:outline-none w-80 text-lg' placeholder='your username' />
             </div>
             <div className='my-3'>
-              <input onChange={loginValue} type="password" name='password' id='password' className='p-1 bg-white border-b-2 focus:outline-none w-80 text-lg' />
+              <input onChange={loginValue} type="password" name='password' id='password' className='p-1 bg-white border-b-2 focus:outline-none w-80 text-lg' placeholder='your password'/>
             </div>
             <div>
               <button type='submit' className='bg-blue-400 text-white p-2 rounded-lg'>Login</button>
