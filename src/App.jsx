@@ -7,8 +7,6 @@ import Cart from './components/Cart';
 import TotalPayment from './components/TotalPayment';
 import { base_url } from './global/Constant';
 
-
-
 function App() {
   const [products, setProducts] = useState([])
   const [cart, setCart] = useState([])
