@@ -232,7 +232,7 @@ function App() {
       <div className='grid grid-cols-10 h-screen bg-cover text-white overflow-hidden' style={{ backgroundImage: `url(${bg_cool})` }}>
         <div className=' w-full col-span-7 p-8 overflow-hidden '>
           <TotalPayment total={total} completePayment={completePayment} />
-          <div className='grid grid-cols-4 gap-7 2xl:gap-8 max-h-full overflow-auto pb-20'>
+          <div className='grid grid-cols-4 gap-7 2xl:gap-8 max-h-full overflow-auto pb-32'>
             {products.map(product => (
               <div onClick={() => addProduct(product)} className="card col-span-1 card-compact w-64 2xl:h-96 h-96 2xl:w-full bg-base-100 shadow-xl cursor-pointer" key={product.id}>
                 <figure><img src={product.image} alt="Shoes" /></figure>
