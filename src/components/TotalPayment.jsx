@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { base_url } from '../global/Constant';
-import Swal from 'sweetalert2'
-
+import React from 'react'
 export default function TotalPayment({ total, completePayment }) {
 
   return (

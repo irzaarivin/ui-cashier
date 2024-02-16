@@ -68,8 +68,8 @@ function App() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            totalPrice: totalPayment,
-            data
+            prices: totalPayment,
+            items: data
           })
         })
         const { status } = await res.json();
@@ -136,7 +136,7 @@ function App() {
   }, [startCount]);
 
   useEffect(() => {
-    if (count > 15) {
+    if (count >= 30) {
       setLoginStatus(!loginStatus)
       setCount(0)
       setStartCount(false)
@@ -153,8 +153,7 @@ function App() {
 
   const loginSubmit = (e) => {
     e.preventDefault();
-    if (login.username === "admin" && login.password === "admin") {
-      document.getElementById("username").value = "";
+    if (login.password === "123123123123") {
       document.getElementById("password").value = "";
       setLogin({})
       setLoginStatus(!loginStatus)
@@ -162,7 +161,7 @@ function App() {
     } else {
       Swal.fire({
         title: "Login Failed",
-        text: `wrong username or password`,
+        text: `wrong password`,
         icon: "error",
         background: "#262626",
         color: "#fff"
@@ -221,14 +220,11 @@ function App() {
         <div className='border p-5 w-auto text-black'>
           <p className='text-black text-center font-semibold text-xl'>CASHIER APP</p>
           <form onSubmit={loginSubmit}>
-            <div className='my-3'>
-              <input onChange={loginValue} type="text" name='username' id='username' className='p-1 bg-white border-b-2 focus:outline-none w-80 text-lg' placeholder='your username' />
-            </div>
-            <div className='my-3'>
+            <div className='my-6'>
               <input onChange={loginValue} type="password" name='password' id='password' className='p-1 bg-white border-b-2 focus:outline-none w-80 text-lg' placeholder='your password'/>
             </div>
             <div>
-              <button type='submit' className='bg-blue-400 text-white p-2 rounded-lg'>Login</button>
+              <button type='submit' className='bg-blue-400 text-white p-2 rounded-lg w-full active:bg-blue-500 font-semibold'>LOGIN</button>
             </div>
           </form>
         </div>
