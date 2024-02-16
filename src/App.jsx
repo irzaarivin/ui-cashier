@@ -3,7 +3,7 @@ import bg_cool from './assets/bg_cool.png';
 import { useState } from 'react';
 import Swal from 'sweetalert2'
 import Calculator from './components/Calculator';
-const base_url = 'http://192.168.101.103:4444'
+const base_url = 'http://localhost:4444'
 // const base_url = 'http://localhost:4444'
 
 
@@ -84,8 +84,8 @@ function App() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            totalPrice: totalPayment,
-            data
+            prices: totalPayment,
+            items: data
           })
         })
         const { status } = await res.json();
