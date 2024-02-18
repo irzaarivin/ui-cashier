@@ -6,6 +6,7 @@ import Calculator from './components/Calculator';
 import Cart from './components/Cart';
 import TotalPayment from './components/TotalPayment';
 import { base_url } from './global/Constant';
+import Alert from './global/Alert';
 
 function App() {
   const [products, setProducts] = useState([])
@@ -17,6 +18,10 @@ function App() {
   const [startCount, setStartCount] = useState(false);
   const [total, setTotal] = useState()
   const [totalPayment, setTotalPayment] = useState();
+  const [failedCount, setFailedCount] = useState(0);
+  const [startCountDown, setStartCountDown] = useState(false);
+  const [timer, setTimer] = useState();
+
 
   const fetchData = async () => {
     const res = await fetch(`${base_url}/item?status=available`)
@@ -29,7 +34,7 @@ function App() {
 
     if (existingItem) {
       if (existingItem.quantity >= data.stock) {
-        Swal.fire({
+        Alert({
           title: "Cannot add more product",
           text: `The quantity of this product has reached its limit`,
           icon: "warning",
@@ -54,7 +59,6 @@ function App() {
   const completePayment = async () => {
     try {
       if (cart.length > 0) {
-
         let data = []
 
         cart.map((item) => {
@@ -76,7 +80,7 @@ function App() {
 
         if (status === 'Success') {
           data = []
-          Swal.fire({
+          Alert({
             title: "Payment Success",
             text: `Your total payment is Rp. ${total}`,
             icon: "success",
@@ -87,7 +91,7 @@ function App() {
           setTotal(0)
           fetchData();
         } else {
-          Swal.fire({
+          Alert({
             title: "Payment Failed",
             text: `Something went wrong`,
             icon: "error",
@@ -96,7 +100,7 @@ function App() {
           });
         }
       } else {
-        Swal.fire({
+        Alert({
           title: "No Payment",
           text: `There is no item in your cart`,
           icon: "error",
@@ -105,7 +109,7 @@ function App() {
         })
       }
     } catch (error) {
-      Swal.fire({
+      Alert({
         title: "Payment Failed",
         text: `Something went wrong`,
         icon: "error",
@@ -159,15 +163,39 @@ function App() {
       setLoginStatus(!loginStatus)
       setStartCount(true)
     } else {
-      Swal.fire({
+      let count = failedCount
+      count++
+      document.getElementById("password").value = "";
+      setFailedCount(count)
+      Alert({
         title: "Login Failed",
         text: `wrong password`,
         icon: "error",
-        background: "#262626",
-        color: "#fff"
+        confirmButtonText: "Try Again",
+        confirmButtonColor: "#d9c049"
       })
     }
   }
+
+  useEffect(() => {
+    if(failedCount % 3 === 0 && failedCount > 0) {
+      setStartCountDown(true);
+      setTimer((failedCount / 3) * 5);
+    }
+  }, [failedCount]);
+
+  useEffect(() => {
+    let intervalId;
+    if (startCountDown && timer > 0) {
+      intervalId = setInterval(() => {
+        setTimer(prevCount => prevCount - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      setStartCountDown(false);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [startCountDown, timer]);
 
   useEffect(() => {
     const handleContextmenu = e => {
@@ -221,12 +249,13 @@ function App() {
           <p className='text-black text-center font-semibold text-xl'>CASHIER APP</p>
           <form onSubmit={loginSubmit}>
             <div className='my-6'>
-              <input onChange={loginValue} type="password" name='password' id='password' className='p-1 bg-white border-b-2 focus:outline-none w-80 text-lg' placeholder='your password'/>
+              <input onChange={loginValue} type="password" name='password' id='password' className='p-1 bg-white border-b-2 focus:outline-none w-80 text-lg' placeholder='your password' disabled={startCountDown}/>
             </div>
             <div>
-              <button type='submit' className='bg-blue-400 text-white p-2 rounded-lg w-full active:bg-blue-500 font-semibold'>LOGIN</button>
+              <button type='submit' className={`text-white p-2 rounded-lg w-full font-semibold ${startCountDown ? 'bg-gray-400 active:bg-gray-400' : 'bg-blue-400 active:bg-blue-500'} transition-colors`} disabled={startCountDown}>LOGIN</button>
             </div>
           </form>
+          {startCountDown && <p className='mt-3 text-center'>Wait for <span className='text-red-400 font-semibold'>{timer}</span> seconds before trying again.</p>}
         </div>
       </div>
       <div className='grid grid-cols-10 h-screen bg-cover text-white overflow-hidden' style={{ backgroundImage: `url(${bg_cool})` }}>
